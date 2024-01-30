@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         // List dari beberapa pembuatan data fake
         $this->call([
             UserSeeder::class,
+            SoalSeeder::class,
         ]);
     }
 }
