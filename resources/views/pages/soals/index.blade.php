@@ -14,7 +14,7 @@
             <div class="section-header">
                 <h1>Bank Soal</h1>
                 <div class="section-header-button">
-                    <a href="{{ route('soal.create') }}"
+                    <a href="{{ route('soals.create') }}"
                         class="btn btn-primary">Add New</a>
                 </div>
                 <div class="section-header-breadcrumb">
@@ -76,7 +76,7 @@
                                     </select>
                                 </div>
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('soal.index') }}">
+                                    <form method="GET" action="{{ route('soals.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="pertanyaan">
                                             <div class="input-group-append">
