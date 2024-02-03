@@ -107,6 +107,15 @@ class UjianController extends Controller
     public function getListSoalByKategori(Request $request)
     {
         $ujian = Ujian::where('user_id', $request->user()->id)->first();
+
+        // if ujian not found return empty
+        if (!$ujian) {
+            return response()->json([
+                'messsage' => 'Ujian tidak ditemukan',
+                'data' => [],
+            ], 200);
+        }
+
         $ujianSoalList = UjianSoalList::where('ujian_id', $ujian->id)->get();
         $soalIds = $ujianSoalList->pluck('soal_id');
 
@@ -137,6 +146,15 @@ class UjianController extends Controller
 
 
         $ujian = Ujian::where('user_id', $request->user()->id)->first();
+
+        // if ujian not found return empty
+        if (!$ujian) {
+            return response()->json([
+                'messsage' => 'Ujian tidak ditemukan',
+                'data' => [],
+            ], 200);
+        }
+
         $ujianSoalList = UjianSoalList::where('ujian_id', $ujian->id)->where('soal_id', $validatedData['soal_id'])->first();
         $soal = Soal::where('id', $validatedData['soal_id'])->first();
 
@@ -167,7 +185,7 @@ class UjianController extends Controller
         return response()->json([
             'message' => 'Berhasil simpan jawaban',
             'jawaban' => $ujianSoalList->kebenaran,
-        ]);
+        ], 200);
     }
 
     // get hasil ujian (hitung nilai ujian by kategori)
@@ -175,6 +193,15 @@ class UjianController extends Controller
     {
         $kategori = $request->kategori;
         $ujian = Ujian::where('user_id', $request->user()->id)->first();
+
+        // if ujian not found return empty
+        if (!$ujian) {
+            return response()->json([
+                'messsage' => 'Ujian tidak ditemukan',
+                'data' => [],
+            ], 200);
+        }
+
         $ujianSoalList = UjianSoalList::where('ujian_id', $ujian->id)->get();
         //ujiansoallist by kategori
         $ujianSoalList = $ujianSoalList->filter(function ($value, $key) use ($kategori) {
