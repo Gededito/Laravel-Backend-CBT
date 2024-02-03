@@ -36,7 +36,7 @@
                 <ul class="dropdown-menu">
                     <li>
                         <a class="nav-link"
-                            href="{{ route('soal.index') }}">All Soal</a>
+                            href="{{ route('soals.index') }}">All Soal</a>
                     </li>
                 </ul>
             </li>
