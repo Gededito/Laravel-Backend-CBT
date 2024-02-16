@@ -169,4 +169,44 @@ class UjianController extends Controller
             'jawaban' => $ujianSoalList->kebenaran,
         ]);
     }
+
+    // hitung nilai ujian by categori
+    public function hitungNilaiUjianByKategori(Request $request) {
+
+        $kategori = $request->kategori;
+        // Mengambil id dari ujian
+        $ujian = Ujian::where('user_id', $request->user()->id)->first();
+        // Selanjutnya mencari soal list yang ditampilkan
+        $ujianSoalList = UjianSoalList::where('ujian_id', $ujian->id)->get();
+        // Selanjutnya mengambil ujianSoalList sesuai Kategori
+        $ujianSoalList = $ujianSoalList->filter(function ($value, $key) use ($kategori) {
+            return $value->soal->kategori == $kategori;
+        });
+
+        // $soalIds = $ujianSoalList->pluck('soal_id');
+        // $soal = Soal::whereIn('id', $soalIds)->where('kategori', $request->kategori)->get();
+
+        // Hitung Nilai
+        $totalBenar = $ujianSoalList->where('kebenaran', true)->count();
+        $totalSoal = $ujianSoalList->count();
+        $nilai = ($totalBenar / $totalSoal) * 100;
+
+        // Melakukan pengecekan terkait kategori soal yang dikerjakan
+        $kategori_field = 'nilai_verbal';
+        if ($kategori == 'Numeric') {
+            $kategori_field = 'nilai_angka';
+        } else if ($kategori == 'Logika') {
+            $kategori_field = 'nilai_logika';
+        }
+
+        // Update Nilai Berdasarkan Kategori
+        $ujian->update([
+            $kategori_field => $nilai
+        ]);
+
+        return response()->json([
+            'message' => 'Berhasil mendapatkan nilai',
+            'nilai' => $nilai,
+        ]);
+    }
 }
