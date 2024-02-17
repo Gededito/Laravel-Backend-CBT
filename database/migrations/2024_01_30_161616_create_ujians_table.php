@@ -22,7 +22,7 @@ return new class extends Migration
             // status ujian enum (start, done)
             $table->enum('status_angka', ['start', 'done'])->default('start');
             $table->enum('status_verbal', ['start', 'done'])->default('start');
-            $table->enum('status_logik', ['start', 'done'])->default('start');
+            $table->enum('status_logika', ['start', 'done'])->default('start');
             // timer ujian per kategori
             $table->integer('timer_angka')->nullable();
             $table->integer('timer_verbal')->nullable();
